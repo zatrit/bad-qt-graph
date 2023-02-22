@@ -22,8 +22,7 @@ start_time = time.time()
 
 
 def display_list(_list):
-    x, y = zip(*map(lambda a: a[0], _list[::2]))
-    plt.plot(x, [height - _y for _y in y])
+    plt.plot(*zip(*map(lambda a: a[0], _list[::2])))
 
 
 while True:
@@ -32,7 +31,7 @@ while True:
     if excepted_frames > cur_frames:
         vc.set(cv2.CAP_PROP_POS_FRAMES, excepted_frames)
         cur_frames = excepted_frames
-    edged = cv2.threshold(vc.read()[1], 200, 255, cv2.THRESH_BINARY)[1]
+    edged = cv2.flip(cv2.threshold(vc.read()[1], 200, 255, cv2.THRESH_BINARY)[1], 0)
     edged = cv2.cvtColor(edged, cv2.COLOR_RGB2GRAY)
     contours = cv2.findContours(
         edged, cv2.RETR_LIST, cv2.CHAIN_APPROX_NONE)[0]
