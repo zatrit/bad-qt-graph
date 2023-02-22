@@ -35,10 +35,10 @@ while True:
     edged = cv2.cvtColor(edged, cv2.COLOR_RGB2GRAY)
     contours = cv2.findContours(
         edged, cv2.RETR_LIST, cv2.CHAIN_APPROX_NONE)[0]
-    if contours != ():
+    if contours:
         plt.clear()
         plt.plot(*bounds)
-        [display_list(_list) for _list in contours]
+        deque(map(display_list, contours), maxlen=0)
         QApplication.processEvents()
     if cur_frames > excepted_frames:
         time.sleep(1 / fps)
